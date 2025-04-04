@@ -54,8 +54,10 @@
     {{-- duration --}}
     <div class="col-span-1">
         <x-common.field :title="__('Durée')">
-            <p class="font-medium text-lg">3 jours</p>
-            <small>01 mars - 03 mars</small>
+            <x-common.duration
+                :date-start="$rental->date_start"
+                :date-to="$rental->date_end"
+            />
         </x-common.field>
     </div>
     {{-- Price --}}

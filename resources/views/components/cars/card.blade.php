@@ -2,7 +2,7 @@
 <div class="card card-side bg-base-100 shadow-md  ">
 
     <figure class="w-36 max-h-44 object-cover">
-        <img src="{{ asset($car->image) }}" alt="Title" />
+        <img src="{{ asset($car->image) }}" alt="{{ $car->name }}" />
     </figure>
     <div class="card-body">
         <div class="flex justify-between items-top">

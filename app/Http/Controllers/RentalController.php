@@ -84,7 +84,44 @@ class RentalController extends Controller
      */
     public function create()
     {
+        $cars = [
+            (object)[
+                'id' => 1,
+                'name' => 'Porsche 911-2020',
+                'registration' => '23945-A-72',
+                'price' => 200.00,
+                'image' => 'images/cars/car1.webp',
+                'status' => 'available',
+                'brand' => 'Porsche',
+            ],
+            (object)[
+                'id' => 2,
+                'name' => 'Mercedes AMG GT',
+                'registration' => '23946-B-73',
+                'price' => 180.00,
+                'image' => 'images/cars/car2.webp',
+                'status' => 'available',
+                'brand' => 'Mercedes',
+            ],
+            (object)[
+                'id' => 3,
+                'name' => 'BMW M4 Competition',
+                'registration' => '23947-C-74',
+                'price' => 150.00,
+                'image' => 'images/cars/car3.webp',
+                'status' => 'rented',
+                "reservation" => (object)[
+                    'client' => 'Ahmed Ali',
+                    'date_end' => Carbon::now(),
+                ],
+                'brand' => 'BMW',
+            ],
+        ];
+        $date_start = '2024-01-15';
+        $date_to = '2024-01-20';
+        $client_id = 1;
 
+        return view('rentals.create', compact('cars', 'date_start', 'date_to', 'client_id'));
     }
 
     /**
@@ -101,7 +138,32 @@ class RentalController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $car = (object) [
+            "id"           => 1,
+            'name'         => 'Porsche 911-2020',
+            'registration' => '23945-A-72',
+            'price'        => 200.00,
+            'image'        => 'images/cars/car1.webp',
+            'status'       => 'available',
+            'brand'        => 'Porsche',
+            "model"        => "DEV DD",
+            'type'         => 'SUV',
+            'fuel'         => 'Diesel',
+        ];
+        $rental =(object) [
+            'id'          => 1,
+            'date_start'  => Carbon::parse('2024-01-15'),
+            'date_end'    => Carbon::parse('2024-01-20'),
+            'status'      => 'new',
+            'total_price' => 1000.00,
+            'client'      => (object) [
+                'id'   => 1,
+                'name' => "Ahmed Ali",
+            ],
+            'car'         => $car,
+        ];
+
+        return view('rentals.show', compact('rental'));
     }
 
     /**
@@ -109,7 +171,32 @@ class RentalController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $car = (object) [
+            "id"           => 1,
+            'name'         => 'Porsche 911-2020',
+            'registration' => '23945-A-72',
+            'price'        => 200.00,
+            'image'        => 'images/cars/car1.webp',
+            'status'       => 'available',
+            'brand'        => 'Porsche',
+            "model"        => "DEV DD",
+            'type'         => 'SUV',
+            'fuel'         => 'Diesel',
+        ];
+        $rental =(object) [
+            'id'          => 1,
+            'date_start'  => Carbon::parse('2024-01-15'),
+            'date_end'    => Carbon::parse('2024-01-20'),
+            'status'      => 'new',
+            'total_price' => 1000.00,
+            'client'      => (object) [
+                'id'   => 1,
+                'name' => "Ahmed Ali",
+            ],
+            'car'         => $car,
+        ];
+
+        return view('rentals.edit', compact('rental'));
     }
 
     /**
