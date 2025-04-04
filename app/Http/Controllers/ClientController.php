@@ -1,7 +1,9 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\Client;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class ClientController extends Controller
 {
@@ -10,18 +12,7 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $clients = [
-            (object) ['id' => 1, 'name' => 'John Doe', 'email' => 'john.doe@example.com', 'phone' => '123-456-7890'],
-            (object) ['id' => 2, 'name' => 'Jane Smith', 'email' => 'jane.smith@example.com', 'phone' => '987-654-3210'],
-            (object) ['id' => 3, 'name' => 'Alice Johnson', 'email' => 'alice.johnson@example.com', 'phone' => '456-789-1234'],
-            (object) ['id' => 4, 'name' => 'Bob Brown', 'email' => 'bob.brown@example.com', 'phone' => '321-654-9870'],
-            (object) ['id' => 5, 'name' => 'Charlie Davis', 'email' => 'charlie.davis@example.com', 'phone' => '654-321-0987'],
-            (object) ['id' => 6, 'name' => 'Diana Evans', 'email' => 'diana.evans@example.com', 'phone' => '789-123-4567'],
-            (object) ['id' => 7, 'name' => 'Ethan Harris', 'email' => 'ethan.harris@example.com', 'phone' => '234-567-8901'],
-            (object) ['id' => 8, 'name' => 'Fiona Green', 'email' => 'fiona.green@example.com', 'phone' => '890-123-4567'],
-            (object) ['id' => 9, 'name' => 'George Hill', 'email' => 'george.hill@example.com', 'phone' => '567-890-1234'],
-            (object) ['id' => 10, 'name' => 'Hannah White', 'email' => 'hannah.white@example.com', 'phone' => '678-901-2345'],
-        ];
+        $clients = Client::orderBy('name')->paginate(10);
 
         return view('clients.index', compact('clients'));
 
@@ -40,7 +31,15 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name'  => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:clients,email',
+            'phone' => 'required|string|max:15',
+        ]);
+
+        Client::create($validated);
+
+        return to_route('clients.index')->with('success', 'Client created successfully');
     }
 
     /**
@@ -56,7 +55,7 @@ class ClientController extends Controller
      */
     public function edit(string $id)
     {
-        $client = (object) ['id' => 1, 'name' => 'John Doe', 'email' => 'john.doe@example.com', 'phone' => '123-456-7890'];
+        $client = Client::findOrFail($id);
 
         return view('clients.edit', compact('client'));
     }
@@ -66,7 +65,22 @@ class ClientController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $client = Client::findOrFail($id);
+
+        $validated = $request->validate([
+            'name'  => 'required|string|max:255',
+            'email' => [
+                'required',
+                'email',
+                'max:255',
+                Rule::unique('clients','email')->ignore($client->id),
+            ],
+            'phone' => 'required|string|max:15',
+        ]);
+
+        $client->update($validated);
+
+        return to_route('clients.index')->with('success', 'Client updated successfully');
     }
 
     /**
@@ -74,6 +88,7 @@ class ClientController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Client::destroy($id);
+        return to_route('clients.index')->with('success', 'Client deleted successfully');
     }
 }

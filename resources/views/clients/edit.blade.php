@@ -1,4 +1,4 @@
-<x-layout.app title="Nouveau client">
+<x-layout.app title="Editer Client">
 
 
     {{-- Create Form --}}
@@ -9,6 +9,8 @@
         >
 
             @csrf
+            @method('PUT')
+
             <div class="grid md:grid-cols-1 gap-6 w-1/2  ">
 
                 <!-- Name -->
@@ -55,7 +57,7 @@
                     {{ __('Annuler') }}</button>
                 <button
                     type="submit"
-                    class="btn btn-primary " "> {{ __('Ajouter') }}</button>
+                    class="btn btn-primary " "> {{ __('Enregistrer') }}</button>
                
             </div>
         </form>

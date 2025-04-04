@@ -35,6 +35,11 @@
                 </div>
 
             </header>
+
+            {{-- Alerts --}}
+            <x-layout.alerts />
+
+            {{-- Page Content --}}
             <!-- Page content here -->
             {{ $slot }}
         </div>

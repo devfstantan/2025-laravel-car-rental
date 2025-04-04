@@ -1,7 +1,18 @@
-@props(['name','label', 'errors' => null])
+@props(['name', 'value', 'label', 'errors' => null])
 
 <div>
-    <x-form.label :for="$name" :value="$label" />
-    <input  {{ $attributes->except(['label', 'errors'])->merge(['class' => 'input w-full mt-1']) }}>
-    <x-form.error :messages="$errors" class="mt-2" />
+    <x-form.label
+        :for="$name"
+        :value="$label"
+    />
+    <input
+        {{ $attributes->merge(['class' => 'input w-full mt-1']) }}
+        name="{{ $name }}"
+        id="{{ $name }}"
+        value="{{ $value }}"
+    />
+    <x-form.error
+        :messages="$errors"
+        class="mt-2"
+    />
 </div>
