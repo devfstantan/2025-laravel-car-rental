@@ -1,8 +1,11 @@
 @props(['dateStart', 'dateTo'])
 @php
-    $days = \Carbon\Carbon::parse($dateStart)->diffInDays(\Carbon\Carbon::parse($dateTo));
-    $dateStartFormatted = \Carbon\Carbon::parse($dateStart)->translatedFormat('d M');
-    $dateToFormatted = \Carbon\Carbon::parse($dateTo)->format('d M');
+    $dStart = \Carbon\Carbon::parse($dateStart);
+    $dTo = \Carbon\Carbon::parse($dateTo);
+
+    $days = $dStart->diffInDays($dTo);
+    $dateStartFormatted = $dStart->translatedFormat('d M');
+    $dateToFormatted = $dTo->format('d M');
 @endphp
 
 <p class="font-medium text-lg"> {{$days}} jours</p>
