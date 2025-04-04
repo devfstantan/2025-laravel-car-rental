@@ -8,7 +8,11 @@
             Nouveau client
         </a>
     </x-slot>
-    <x-layout.section title="Client">
+    <x-layout.section >
+        {{-- Filter --}}
+        <x-slot:actions>
+            <x-clients.filter-form />
+        </x-slot:actions>
         <div class="overflow-x-auto">
             <table class="table    w-full">
                 <thead>

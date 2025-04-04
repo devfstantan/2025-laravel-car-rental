@@ -12,7 +12,15 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $clients = Client::orderBy('name')->paginate(10);
+        $search = request('search');
+        if ($search && $search !== '') {
+            $clients = Client::where('name', 'like', "%{$search}%")
+                ->orWhere('email', 'like', "%{$search}%")
+                ->orderBy('name')
+                ->paginate(10);
+        } else {
+            $clients = Client::orderBy('name')->paginate(10);
+        }
 
         return view('clients.index', compact('clients'));
 

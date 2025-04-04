@@ -21,7 +21,7 @@
 
     <div class="drawer lg:drawer-open">
         <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
-        <div class="drawer-content flex flex-col gap-3 p-3">
+        <div class="drawer-content flex flex-col gap-3 p-8">
             {{-- Page Header --}}
             <header class="navbar mb-2 p-2 shadow-sm bg-base-100 text-base-content flex justify-between">
                 <div class="flex gap-3 items-center">
